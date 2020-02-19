@@ -59,14 +59,24 @@ Adding
 
 https://github.com/ewelinawilkosz/praqma-jenkins-casc/tree/hands_on/hands-on#how-to
 
-Show the secret file
+Show the "secret" env file
+
+Say that normally you would not have your env file with password inside your git repo.
+
+Accessing documentation
+
+* Manage Jenkins -> Configuration as Code -> Documentation
 
 ### Tasks
 
-Update docker-compose adding the secret 
+Update docker-compose adding the env
 docker-compose down and up
 update jenkins yaml to add the user
 reload the config
 login with the new user
 
+try to change the variable, and see that it does NOT work; docker-compose sets the env variable at startup. Nothing to do with CasC.
+
 ## Clean up
+
+docker-compose down

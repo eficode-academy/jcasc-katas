@@ -1,0 +1,12 @@
+jenkins:
+  systemMessage: "Jenkins says hello world :)\n\n"
+  numExecutors: 3
+  mode: NORMAL
+  scmCheckoutRetryCount: 3
+  labelString: "master-label"
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+      - id: admin
+        password: ${adminpw}

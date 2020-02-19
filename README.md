@@ -12,6 +12,9 @@ The following tools should be installed:
 ## Natural order
 
 1. [Setup Jenkins](setup-jenkins/README.md)
+1. installing-plugins
+1. basic-system-config
+1. 
 
 ## Resources
 
