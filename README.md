@@ -12,3 +12,8 @@ The following tools should be installed:
 ## Natural order
 
 1. [Setup Jenkins](setup-jenkins/README.md)
+
+## Resources
+
+Snippets for different plugins https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
+Getting started: https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/README.md#getting-started
