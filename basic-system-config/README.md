@@ -59,11 +59,14 @@ Adding
 
 https://github.com/ewelinawilkosz/praqma-jenkins-casc/tree/hands_on/hands-on#how-to
 
-Missing section about adding a secret.
+Show the secret file
 
 ### Tasks
 
-Add
-Update docker
+Update docker-compose adding the secret 
+docker-compose down and up
+update jenkins yaml to add the user
+reload the config
+login with the new user
 
 ## Clean up
