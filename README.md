@@ -16,6 +16,8 @@ The following tools should be installed:
 1. basic-system-config
 1. 
 
+!!! Fork this repo to preserve your work
+
 ## Resources
 
 Snippets for different plugins https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
