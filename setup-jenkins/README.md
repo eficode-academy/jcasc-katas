@@ -1,3 +1,8 @@
-# Setup Jenkins with required plugins
+# Setup Jenkins 
+
+!!! Make intro
+
+## First boot
+
 
 Run docker compose
