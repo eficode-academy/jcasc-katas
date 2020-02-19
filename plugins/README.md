@@ -54,3 +54,7 @@ Master has no configuration as code file set.
 We need to work on that now.
 
 Go to [Basic system config](basic-system-config/README.md)
+
+## Clean up
+
+`docker-compose down` not deleting the volumes we just made with installing the plugins
