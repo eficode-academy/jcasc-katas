@@ -24,7 +24,7 @@ start jenkins without --build
 
 look at the main page: Jenkins says hello!.
 
-Manage Jenkins -> Configure system ->  	# of executors = 3
+Manage Jenkins -> Configure system ->  # of executors = 3
 
 * change system message
 * Manage Jenkins -> Configuration as Code

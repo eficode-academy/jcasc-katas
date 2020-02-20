@@ -8,3 +8,5 @@ workflow-aggregator:latest
 jdk-tool:latest
 command-launcher:latest
 configuration-as-code:latest
+ssh-agent:latest
+bouncycastle-api:latest
