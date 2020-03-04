@@ -11,7 +11,11 @@ services:
       - ./casc-config:/var/jenkins_config
     environment: 
       - CASC_JENKINS_CONFIG=/var/jenkins_config
-    env_file: 
-      - ./secret/admin.env
+    secrets:
+      - adminpw
+
+secrets:
+  adminpw:
+    file: ./secret/admin.txt
 volumes:
   jenkins_home:

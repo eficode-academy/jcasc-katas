@@ -1,5 +1,8 @@
 # Basic system config
 
+Having Jenkins up and running with required plugins on board is just a first step. Configuring it in a way that'll let you proceed with specific tasks is what comes next.
+
+In order to be 
 secret
 jenkins.yaml
 change in docker-compose
