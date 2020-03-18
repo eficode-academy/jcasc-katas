@@ -12,9 +12,11 @@ The following tools should be installed:
 ## Natural order
 
 1. [Setup Jenkins](setup-jenkins/README.md)
-1. installing-plugins
-1. basic-system-config
-1. 
+1. [Installing plugins](installing-plugins/README.md)
+1. [Basic system configuration](basic-system-config/README.md)
+1. [Configuring plugins](configuring-plugins/README.md)
+1. [Build agents](build-agents/README.md)
+1. [Jobs](jobs/README.md)
 
 !!! Fork this repo to preserve your work
 
