@@ -24,3 +24,5 @@ The following tools should be installed:
 
 Snippets for different plugins https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
 Getting started: https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/README.md#getting-started
+
+Schema reference can be found on `<Jenkins_URL>/configuration-as-code/reference`
