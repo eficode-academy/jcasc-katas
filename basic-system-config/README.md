@@ -83,25 +83,19 @@ Everything should be back to the original state agin.
 
 ## Adding a user to the system
 
-Adding
+As it is right now, everyone can go in and use our instance, so the first thing we need to adjust is to enable security, so non-authenticated users cannot change everything.
 
-Small steps though, we'll create a user (under jenkins root element)
+We will need to enable security in the JCasC configuration file.
+
+First we'll create a user (under jenkins root element)
+
+> Note: as said before, all the objects that we are creating can be found in the documentation reference for JCasC. To see it, go to: Manage Jenkins -> Configuration as Code -> Documentation
 
 !!! Take info from here:
-
 https://github.com/ewelinawilkosz/praqma-jenkins-casc/tree/hands_on/hands-on#how-to
-
-Show the "secret" env file
-
-Say that normally you would not have your env file with password inside your git repo.
-
-Accessing documentation
-
-* Manage Jenkins -> Configuration as Code -> Documentation
 
 ### Tasks
 
-Update docker-compose adding the env
 docker-compose down and up
 update jenkins yaml to add the user
 
@@ -111,11 +105,24 @@ update jenkins yaml to add the user
       allowsSignup: false
       users:
       - id: admin
-        password: ${adminpw}
+        password: password
 ```
 
 * Reload configuration `Manage Jenkins -> Configuration as Code -> Reload existing configuration`
 * login with the new admin user
+
+## Extra: Hardening the user
+
+While we made sure that annon
+
+> Normally you would not have your env file with password inside your git repo. Instead you would either have it ignored by git, or some other external place. For secrets handling on a larger scale, look at services like [Vault](https://www.vaultproject.io/).
+
+We will need to both edit the docker-compose file to pass in the password file, and enabling security in the JCasC configuration file.
+
+Show the "secret" env file
+
+Say that 
+Update docker-compose adding the env
 
 > Extra: try to change the variable, and see that it does NOT work. **Why?**
 >
