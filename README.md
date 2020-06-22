@@ -9,6 +9,8 @@ The following tools should be installed:
 * Docker
 * Git
 
+[![Open the exercises in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https://github.com/praqma-training/jcasc-katas.git)
+
 ## Natural order
 
 1. [Setup Jenkins](setup-jenkins/README.md)
