@@ -29,8 +29,9 @@ Solution: left as an exercise to the reader, seed-jobs (super-seed-jobs)
 ```yaml
 jenkins:
   systemMessage: "Jenkins says hello world :)\n\n"
-  jobs: |
-    // jobDSL
+  jobs:
+  - script: |
+      // jobDSL
 ```
 
 JobDSL:
@@ -47,32 +48,34 @@ JobDsl Inlined in `jenkins.yaml`:
 
 ```yaml
   ...
-  jobs: |
-    pipelineJob('hello-pipeline-inline') {
-      definition { cps { script("""
-        // pipeline script
-      """) } }
-    }
+  jobs:
+  - script: |
+      pipelineJob('hello-pipeline-inline') {
+        definition { cps { script("""
+          // pipeline script
+        """) } }
+      }
 ```
 
 Pipeline in `pipeline/Jenkinsfile`, inlined below:
 
 ```yaml
-  jobs: |
-    pipelineJob('hello-pipeline-inline') {
-      definition { cps { script("""
-        pipeline {
-          agent any
-          stages {
-            stage('Hello, World!') {
-              steps {
-                sh 'echo "Hello, World!"'
+  jobs:
+  - script: |
+      pipelineJob('hello-pipeline-inline') {
+        definition { cps { script("""
+          pipeline {
+            agent any
+            stages {
+              stage('Hello, World!') {
+                steps {
+                  sh 'echo "Hello, World!"'
+                }
               }
             }
           }
-        }
-      """) } }
-    }
+        """) } }
+      }
 ```
 
 > NB: when you add more pipeline jobs, the names must be unique,
@@ -86,29 +89,31 @@ Pipeline in `pipeline/Jenkinsfile`, inlined below:
 - pipeline changes reloaded when pipeline runs
 
 ```yaml
-  jobs: |
-    pipelineJob('hello-pipeline-ext') {
-      definition { cpsScm {
-          // git-config
-          // script location
-      } }
-    }
+  jobs:
+  - script: |
+      pipelineJob('hello-pipeline-ext') {
+        definition { cpsScm {
+            // git-config
+            // script location
+        } }
+      }
 ```
 
 ```yaml
-  jobs: |
-    pipelineJob('hello-pipeline-ext') {
-      definition { cpsScm {
-          scm {
-            git {
-              remote {
-                url ('https://github.com:praqma-training/jcasc-katas.git')
+  jobs:
+  - script: |
+      pipelineJob('hello-pipeline-ext') {
+        definition { cpsScm {
+            scm {
+              git {
+                remote {
+                  url ('https://github.com:praqma-training/jcasc-katas.git')
+                }
               }
             }
-          }
-          scriptPath("jobs/casc-config/pipeline/Jenkinsfile")
-      } }
-    }
+            scriptPath("jobs/casc-config/pipeline/Jenkinsfile")
+        } }
+      }
 ```
 
 > NB: The above links to the `praqma-training/jcasc-katas.git`-repository
