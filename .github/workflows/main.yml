@@ -13,6 +13,6 @@ jobs:
     name: A job to lint markdown
 
     steps:
-    - uses: figaw/markdownlint@4546fe95f5178a3ec57f8840490d864b6efc9e13
+    - uses: figaw/markdownlint@10ea3b6c0ffdd14831356602e52f9c1f6b6634f4
       with:
         parameters: .
