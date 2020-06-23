@@ -13,9 +13,7 @@ jobs:
     name: A job to lint markdown
 
     steps:
+    - uses: actions/checkout@v2
     - uses: figaw/markdownlint@3049c8af233d1df64b8306d0d5f98baa5028e908
-      id: mdl
       with:
         parameters: "."
-    - name: Get the logs
-      run: echo "${{ steps.mdl.outputs.log }}"
