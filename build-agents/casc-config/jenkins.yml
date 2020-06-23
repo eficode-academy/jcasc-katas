@@ -1,0 +1,6 @@
+jenkins:
+  systemMessage: "Jenkins would like to share the work!.\n\n"
+  numExecutors: 3
+  mode: NORMAL
+  scmCheckoutRetryCount: 3
+  labelString: "master-label"
