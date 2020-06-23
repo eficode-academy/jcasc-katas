@@ -29,6 +29,7 @@ Once the logs print **Jenkins is fully up and running** go to the browser and tr
 
 * If you run the katas on your machine use `localhost:8080`
 * If you run the katas on a remote machine use `[remote machine IP]:8080`
+* If you run the katas in the Google Cloud Shell - click `Web Preview` -> `Preview on port 8080`
 
 > NB: to stop the container, press `ctrl + c`
 
