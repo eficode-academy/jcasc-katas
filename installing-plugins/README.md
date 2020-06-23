@@ -1,12 +1,11 @@
 # Plugins
 
-Jenkins itself provide a basic functionality that let's you automate a number of things but in most cases a handful of additionally installed plugins is required in order to run a meaningful build.
+Jenkins itself provides a basic functionality that lets you automate a number of things but in most cases a handful of additionally installed plugins is required in order to run a meaningful build.
 
-Traditionally plugins can be installed manually, through UI, during Jenkins setup process or any time later. But since we're using docker we can automate the process using the script provided within the official image.
+Traditionally plugins can be installed manually, through the UI, during Jenkins setup process or any time later. But since we're using docker we can automate the process using the script provided within the official image.
 
-Check [preinstalling plugins](https://github.com/jenkinsci/docker#preinstalling-plugins) for detailed descirption.
+Check [preinstalling plugins](https://github.com/jenkinsci/docker#preinstalling-plugins) for detailed description.
 Section "Script usage" is directly mentioning the method used.
-
 
 In order to automate plugin installation we need to have a file containing all plugins that needs to be installed:
 
@@ -25,7 +24,7 @@ ssh-agent:latest
 bouncycastle-api:latest
 ```
 
-It will still be possible to install plugins manually afterwards, they will persist in a volume but if you use the same file to recreate Jenkins e.g. on another machines, manually installed plugins will be missing from the installation.
+It will still be possible to install plugins manually afterwards, they will persist in a volume but if you use the same file to recreate Jenkins, e.g., on another machines, manually installed plugins will be missing from the installation.
 
 ## Task
 
@@ -40,7 +39,7 @@ Take your Jenkins down
 
 `docker-compose down`
 
-In the docker file - for example at the end of it - add a COPY command and then a RUN command
+In the docker file - for example at the end of it - add a `COPY` command and then a `RUN` command
 
 ```DOCKERFILE
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
@@ -59,12 +58,19 @@ Plugin installation will take time, and in a normal setup, you would build the J
 
 ## Maintaining plugin list
 
-!!! Talk about how you can export the list of plugins from your jenkins instance
-Under script usage there is a script for extracting the list of plugins.
+Under **Manage Jenkins** -> **Script Console**, you can run this Groovy script to output the list of plugins installed, in a format that JCasC can use. Note that dependencies of
+the installed plugins will also be listed with this script.
+
+```groovy
+  Jenkins.instance.pluginManager.plugins.each{
+    plugin ->
+    println ("${plugin.getShortName()}: ${plugin.getVersion()}");
+  }
+```
 
 ## Are we there yet?
 
-Manage jenkins -> Configuration as Code page
+**Manage Jenkins** -> **Configuration as Code** page
 
 Master has no configuration as code file set.
 

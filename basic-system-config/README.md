@@ -10,34 +10,30 @@ In this exercise, we will use several files and folders to configure Jenkins:
 * `casc-config/jenkins.yaml` file for JCasC configuration of Jenkins.
 * `docker-compose.yml` file for controlling our Jenkins docker instance.
 
-We have made a small jenkins yaml with a hello-world message in as a starter.
+We have made a small Jenkins YAML with a hello-world message in as a starter.
 
 Now we need to wire in our configurations to the Jenkins instance.
-We are using three diffrent types in Docker-compose:
+We are using three different types in Docker-compose:
 
-* A `volume` mounting in the config file
+* A `volume` mounted in the config file
 * An `environment variable` to point JCasC towards the right folder
 * A `secret` to pass in the admin password as an environment variable.
 
-!!! https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/README.md#getting-started
-
-## starting JCasC
+## Starting JCasC
 
 For the first part, we will deal with getting JCasC to read the config from a file.
 
-### tasks
+### Tasks
 
 In the docker compose file:
 
 * Add a volume mount with the jenkins configuration ( `casc-config` ) : 
-
 ```yml
     jenkins:
         volumes:
             - jenkins_home:/var/jenkins_home
             - ./casc-config:/var/jenkins_config
 ```
-
 * Add an environment variable to let JCasC know where the configuration folder is.
 
 ```yml
@@ -46,11 +42,11 @@ In the docker compose file:
             - CASC_JENKINS_CONFIG=/var/jenkins_config
 ```
 
-* start jenkins without --build
-* look at the main page: Jenkins says hello!.
+* Start Jenkins without --build
+* Look at the main page: Jenkins says hello!.
 * Manage Jenkins -> Configure system ->  # of executors = 3
 * Try to change system message to something else
-* Go to Manage Jenkins -> Configuration as Code and verify that the path for config is read from jenkins. It should display something like the following:
+* Go to Manage Jenkins -> Configuration as Code and verify that the path for config is read from Jenkins. It should display something like the following:
 
 ```text
 Configuration loaded from :
@@ -58,6 +54,7 @@ Configuration loaded from :
     /var/jenkins_config
 ```
 
+* You can see under `View Configuration` that JCasC adds a lot more properties to the configuration than what we give as input.
 * Click "reload existing configuration"
 * Observe the system message changed on the front page
 
@@ -73,7 +70,7 @@ And with something as important as your build servers ability to work, it can be
 
 Luckily, JCasC does a dry run of your configuration before applying it. It will not make any changes if the YAML is misconfigured, but rather display an error so you can fix your mistake.
 
-In the next exercise, you are going to misconfigure the yaml file and observe what happens.
+In the next exercise, you are going to misconfigure the YAML file and observe what happens.
 
 ### Tasks
 
@@ -87,7 +84,7 @@ io.jenkins.plugins.casc.ConfiguratorException: Invalid configuration elements fo
 
 * Correct the change again and click reload
 
-Everything should be back to the original state agin.
+Everything should be back to the original state again.
 
 ## Adding a user to the system
 
@@ -95,12 +92,13 @@ As it is right now, everyone can go in and use our instance, so the first thing 
 
 We will need to enable security in the JCasC configuration file.
 
-First we'll create a user (under jenkins root element)
+First we'll create a user (under Jenkins root element)
 
 > Note: as said before, all the objects that we are creating can be found in the documentation reference for JCasC. To see it, go to: Manage Jenkins -> Configuration as Code -> Documentation
 
-!!! Take info from here:
-https://github.com/ewelinawilkosz/praqma-jenkins-casc/tree/hands_on/hands-on#how-to
+Accessing documentation
+
+* **Manage Jenkins** -> **Configuration as Code** -> **Documentation**
 
 ### Tasks
 
@@ -117,20 +115,25 @@ update jenkins yaml to add the user
 ```
 
 * Reload configuration `Manage Jenkins -> Configuration as Code -> Reload existing configuration`
-* login with the new admin user
+* Login with the new admin user
 
 ## Extra: Hardening the user
 
-While we made sure that annon
+While we made sure that anonymous users don't have access, the password is still visible to whoever that has access to the repository.
 
 > Normally you would not have your env file with password inside your git repo. Instead you would either have it ignored by git, or some other external place. For secrets handling on a larger scale, look at services like [Vault](https://www.vaultproject.io/).
 
-We will need to both edit the docker-compose file to pass in the password file, and enabling security in the JCasC configuration file.
+We will need to both edit the `docker-compose` file to pass in the password file, and enabling security in the JCasC configuration file. This is done by adding an extra mount point that mounts the `secrets` directory into `/run/secrets/`.
 
-Show the "secret" env file
+Create a `.env`, and add:
 
-Say that 
-Update docker-compose adding the env
+```ini
+ADMINPASSWORD=notsosecret
+```
+
+You can adjust the `securityRealm` from above to `password: ${ADMINPASSWORD}`, and then restart the docker container.
+
+As another method of setting a password for the user, you can use [online bcrypt tool](https://bcrypt-generator.com/) to generate a hashed password. This needs to be 10 rounds, and then inputting it as `#jbcrypt:<output from bcrypt generator>`
 
 > Extra: try to change the variable, and see that it does NOT work. **Why?**
 >
@@ -142,8 +145,4 @@ docker-compose down
 
 ### Extra
 
-difference between folder and file
-File is only one
-Folder takes all yaml files there, making it more modular (shareable between jenkins instances).
-
-
+Folder takes all YAML files there, making it more modular (shareable between Jenkins instances).
