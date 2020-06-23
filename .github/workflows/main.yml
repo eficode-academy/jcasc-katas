@@ -14,5 +14,8 @@ jobs:
 
     steps:
     - uses: figaw/markdownlint@6776ed999758337f8f74993d69be26a996452737
+      id: mdl
       with:
         parameters: .
+    - name: Get the logs
+      run: echo "${{ steps.mdl.outputs.log }}"
