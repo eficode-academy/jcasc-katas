@@ -43,7 +43,7 @@ Jenkins](../setup-jenkins/README.md)):
 
 `docker-compose up -d`
 
-Look around: go to **Manage jenkins** -> **Plugin manager** and check what are
+Look around: go to **Manage Jenkins** -> **Plugin manager** and check what are
 the **Installed** plugins.  For instance check if Configuration as Code plugin
 is there
 
@@ -99,5 +99,5 @@ Go to [Basic system config](basic-system-config/README.md).
 
 ## Clean up
 
-`docker-compose down` not deleting the volumes we just made with installing the
-plugins.
+`docker-compose down` does not delete the volumes we just made with installing
+the plugins
