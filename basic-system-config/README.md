@@ -29,13 +29,21 @@ For the first part, we will deal with getting JCasC to read the config from a fi
 
 In the docker compose file:
 
-* Add another volume mount with the jenkins configuration: `- ./casc-config:/var/jenkins_config`
+* Add a volume mount with the jenkins configuration ( `casc-config` ) : 
+
+```yml
+    jenkins:
+        volumes:
+            - jenkins_home:/var/jenkins_home
+            - ./casc-config:/var/jenkins_config
+```
 
 * Add an environment variable to let JCasC know where the configuration folder is.
 
 ```yml
-    environment:
-      - CASC_JENKINS_CONFIG=/var/jenkins_config
+    jenkins:
+        environment:
+            - CASC_JENKINS_CONFIG=/var/jenkins_config
 ```
 
 * start jenkins without --build
