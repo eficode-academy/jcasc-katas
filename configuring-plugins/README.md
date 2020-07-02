@@ -8,24 +8,26 @@
 
 ### Task
 
-Manage Jenkins -> Configure Global Security
+**Manage Jenkins** -> **Configure Global Security**
 
 * Enable security
 * Authorization -> Matrix-based security
-Look at it, but do not save. "leave page"
 
-* find "matrix-auth" under https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
-* It's a good starting example, try to implement and reload jenkins
-* add `- "Job/Read:anonymous"`
-* logout
-* watch
-* log in and make a single branch pipeline job with hello world
+Look at it, but do not save. "Leave page"
+
+* Find "matrix-auth" under
+  [https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos](https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos)
+* It's a good starting example, try to implement and reload Jenkins
+* Add `- "Job/Read:anonymous"`
+* Logout
+* Watch
+* Log in and make a single branch pipeline job with hello world
 * Log out to see that you can still see it.
 
 ## Credentials
 
 credentials is another root element, just like jenkins in YAML.
-https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos/credentials
+[JCasC demos](https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos/credentials)
 
 We are adding SSH Credentials by adding a docker-compose secret.
 
@@ -57,8 +59,8 @@ add the jenkins configuration snippet
 
 !!! find a way to update known-hosts
 
-!!! make a pipeline that ssh into the instance provided with the SSH credentials that we are having.
-test it out
+!!! make a pipeline that ssh into the instance provided with the SSH
+credentials that we are having.  test it out
 
 ```groovy
 pipeline {
@@ -78,4 +80,4 @@ pipeline {
 
 ## Further readings
 
-https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
+[JCasC demos](https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos)
