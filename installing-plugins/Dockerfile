@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.204.2
+FROM jenkins/jenkins:2.235.1
 
 LABEL maintainer="ewe@praqma.net"
 
