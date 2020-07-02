@@ -90,7 +90,8 @@ what happens.
 * Observe that you get the following error from Jenkins
 
 ```log
-io.jenkins.plugins.casc.ConfiguratorException: Invalid configuration elements for type class jenkins.model.Jenkins : systeMessage.
+io.jenkins.plugins.casc.ConfiguratorException: Invalid configuration elements
+ for type class jenkins.model.Jenkins : systeMessage.
 ```
 
 * Correct the change again and click reload
