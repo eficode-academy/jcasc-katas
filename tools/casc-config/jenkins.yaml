@@ -1,0 +1,20 @@
+jenkins:
+  systemMessage: "Jenkins has fun with tools and stuff\n\n"
+  numExecutors: 3
+  mode: NORMAL
+  scmCheckoutRetryCount: 3
+  labelString: "master-label"
+
+tool:
+  maven:
+    installations:
+      - name: "m2"
+        home: /usr/share/maven/
+  jdk:
+    installations:
+      - name: OpenJDK 8
+        home: /usr/local/openjdk-8
+  git:
+    installations:
+      - name: git
+        home: /usr/bin
