@@ -6,7 +6,6 @@ passwords, and can also be used transfer files over the SSH protocol.
 
 In this exercise, we will use several files and folders to configure Jenkins:
 
-* `secret/admin.txt` text file for the admin password.
 * `casc-config/jenkins.yaml` file for JCasC configuration of Jenkins.
 * `docker-compose.yml` file for controlling our Jenkins docker instance.
 
@@ -26,8 +25,12 @@ using the credentials plugin. Both [ed25519](https://ed25519.cr.yp.to/) and
 you can freely pick either.
 
 ```bash
-ssh-keygen -f ~/jcasc-key -t ecdsa -b 521
+mkdir keys
+ssh-keygen -f ~/keys/jcasc-key -t ecdsa -b 521 -P ""
 ```
+
+Next, you can post the private key into `.env`. If you run into YAML problems,
+you can use the [YAML Multiline tool](https://yaml-multiline.info/).
 
 With SSH, the private key should always be considered carefully, just like the
 password for the authentication of the admin user in the [basic system config
@@ -53,10 +56,10 @@ system:
 
 You can add the above to `jenkins.yml`, and then reload the
 configuration. Hopefully, you'll see an entry under **Manage Jenkins** ->
-**Manage Credentials**
+**Manage Credentials**.
 
-In Github, you can temporarily add the new public key `~/jcasc-key.pub`, and
-try to change a job to use the `ssh://` protocol. We can continue adding a small
+In Github, you can temporarily add the new public key under the , and try to change a
+job to use the `ssh://` protocol. We can continue adding a small
 job to see that it's possible to clone a repository using the new key.
 
 ### Extra exercises
@@ -74,8 +77,7 @@ part of the job to a remote server, using the SSH protocol.
 To properly clean up after this exercise, we will stop and remove the container completely:
 
 ```bash
-docker-compose stop jenkins
-docker-compose rm
+docker-compose down
 ```
 
 ## Further readings
