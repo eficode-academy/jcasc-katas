@@ -19,7 +19,7 @@ The following tools should be installed:
 1. [Configuring plugins](configuring-plugins/README.md)
 1. [Build agents](build-agents/README.md)
 1. [Jobs](jobs/README.md)
-1. [Configuring ssh](configuring-ssh/README.md)
+1. [Integrate ssh to the pipeline](configuring-ssh/README.md)
 
 !!! Fork this repo to preserve your work
 
