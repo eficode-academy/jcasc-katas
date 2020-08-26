@@ -126,7 +126,8 @@ jenkins:
 - Paste the section above into your configuration under the `jenkins` section
 - Reload the new configuration, and see that Jenkins adds two new agents
   under the master node.
-- Note that there's also a difference in the number of executors for the two new agents.
+- Note that there's also a difference in the number of executors for the two new
+  agents.
 
 > Note: Under the log for the two new agents,
 > you can see this warning. This is because Jenkins logs into the agents for the
