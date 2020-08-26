@@ -1,0 +1,39 @@
+version: "3.5"
+services:
+  jenkins:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+      - 50000:5000
+    volumes:
+      - ./keys:/var/jenkins_home/.ssh
+      - jenkins_home:/var/jenkins_home
+      - ./casc-config:/var/jenkins_config
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_config
+    networks:
+      - jenkins-net
+  ben:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh.agent
+    volumes:
+      - ./keys:/var/lib/jenkins/.ssh
+    networks:
+      - jenkins-net
+  jerry:
+    build:
+      context: .
+      dockerfile: Dockerfile.ssh.agent
+    volumes:
+      - ./keys:/var/lib/jenkins/.ssh
+    networks:
+      - jenkins-net
+
+# make another jenkins instance, and connect this
+volumes:
+  jenkins_home:
+
+networks:
+  jenkins-net:

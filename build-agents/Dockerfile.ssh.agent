@@ -1,0 +1,21 @@
+FROM openjdk:8
+
+ENV DEBIAN_FRONTEND "noninteractive"
+ENV JAVA_HOME "/usr/local/openjdk-8"
+ENV JAVA_PATH "/usr/local/openjdk-8/bin"
+
+# TODO delete package list
+RUN apt-get update && \
+    apt-get install -y openssh-server
+
+RUN mkdir /var/run/sshd
+
+RUN useradd -d /var/lib/jenkins jenkins
+RUN mkdir -p /var/lib/jenkins/.ssh
+
+RUN chown -R jenkins: /var/lib/jenkins/
+
+RUN ln -s /usr/local/openjdk-8/bin/java /usr/bin/java 
+
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]

@@ -1,0 +1,7 @@
+FROM openjdk:8
+
+WORKDIR /var/lib/jenkins
+RUN wget https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/3.17/swarm-client-3.17.jar
+
+EXPOSE 22
+CMD ["java" ,"-jar", "swarm-client-3.17.jar", "-master", "http://jenkins:8080", "-username", "admin", "-password" ,"admin", "-labels" ,"swarm"]
