@@ -13,7 +13,6 @@ RUN mkdir /var/run/sshd
 RUN useradd -d /var/lib/jenkins jenkins
 RUN mkdir -p /var/lib/jenkins/.ssh
 
-COPY ./keys/ /var/lib/jenkins/.ssh/
 RUN chown -R jenkins: /var/lib/jenkins/
 
 RUN ln -s /usr/local/openjdk-8/bin/java /usr/bin/java 

@@ -7,9 +7,9 @@ services:
       - 8080:8080
       - 50000:5000
     volumes:
+      - ./keys:/var/jenkins_home/.ssh
       - jenkins_home:/var/jenkins_home
       - ./casc-config:/var/jenkins_config
-      - ./keys:/var/jenkins_home/.ssh
     environment:
       - CASC_JENKINS_CONFIG=/var/jenkins_config
     networks:
@@ -18,16 +18,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.ssh.agent
-    ports:
-      - "23:22"
+    volumes:
+      - ./keys:/var/lib/jenkins/.ssh
     networks:
       - jenkins-net
   jerry:
     build:
       context: .
       dockerfile: Dockerfile.ssh.agent
-    ports:
-      - "24:22"
+    volumes:
+      - ./keys:/var/lib/jenkins/.ssh
     networks:
       - jenkins-net
 
