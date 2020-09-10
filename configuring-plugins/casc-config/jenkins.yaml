@@ -1,5 +1,4 @@
 jenkins:
-  systemMessage: "Jenkins says hello world :)\n\n"
   numExecutors: 3
   mode: NORMAL
   scmCheckoutRetryCount: 3
@@ -8,5 +7,5 @@ jenkins:
     local:
       allowsSignup: false
       users:
-      - id: admin
-        password: ${adminpw}
+        - id: admin
+          password: ${adminpw}
