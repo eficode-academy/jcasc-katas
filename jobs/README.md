@@ -55,28 +55,103 @@ It would be much nicer if our `pipelineJob` referenced a pipeline that was
 located elsewhere, so we could just make changes to e.g. he `pipeline/Jenkinsfile`
 and Jenkins would reload it when we clicked `Build Now` on the job.
 
-Change the contents of the `pipelineJob` in the JCasC configuration to,
+Replace the jobs-section of the JCasC configuration with the following:
 
-```Jenkinsfile
+```yaml
+jobs:
+- script: |
+    pipelineJob('hello-pipeline-external') {
+      definition { cpsScm {
+          scm {
+            git {
+              remote {
+                url ('https://github.com/eficode-academy/jcasc-katas.git')
+              }
+            }
+          }
+          scriptPath("jobs/pipeline/Jenkinsfile")
+      } }
+    }
 ```
 
-Prereqs:
+Restart Jenkins and visit the configuration of the "hello-pipeline-external" job.
 
-- add the jobdsl plugin <https://plugins.jenkins.io/job-dsl/>
+Notice how the pipeline isn't embedded anymore.
+Instead it's referencing a pipeline on a remote location.
 
-## Endless list of problems
+Run the job and verify that it works.
 
-### Problem: manually configure jobs after restart
+### Optional: Change the pipeline
 
-Solution: inline pipeline jobs into jenkins.yaml
+To change the pipeline, we need to make changes to the git repository.
 
-### Problem: change by modification in jenkins.yaml
+Fork the `jcasc-katas` repository on GitHub and make a change to the file in
+`jobs/pipeline/Jenkinsfile` either by e.g. using the online editor.
 
-Solution: external pipeline jobs, referenced in jenkins.yaml
+Update the JCasC configuration so it points to your repository instead of the
+one owned by `eficode-academy`. NB: make sure you update the JCasC configuration
+that you use when you start Jenkins. Don't update the one in your repository,
+if you're starting Jenkins from the `eficode-academy` one.
 
-### Problem: addition by modification in jenkins.yaml
+### Optional: Seed jobs
 
-Solution: left as an exercise to the reader, seed-jobs (super-seed-jobs)
+So, we can make changes to our pipeline without changing the JCasC configuration,
+but we're still making changes whenever we're adding new jobs, i.e.
+we're appending them to the list in the `jenkins.yaml` like below:
+
+```yaml
+jobs:
+- script: |
+    pipelineJob('hello-pipeline-external') {
+      ...
+    }
+    pipelineJob('another-pipeline-external') {
+      ...
+    }
+    ...
+```
+
+It would be nice if we could have a single job inside the JCasC configuration,
+which when running, would add all the other jobs, which would read the pipelines,
+so we "never" had to make changes to the JCasC configuration!
+(At least not when we had to make changes to the jobs that Jenkins have available.)
+
+Such a jobs are called a Seed job, and looks like the one below:
+
+```yaml
+jobs:
+  - script: |
+      job('super-seed') {
+        scm {
+          git {
+            remote {
+              url ('https://github.com/eficode-academy/jcasc-katas.git')
+            }
+          }
+        }
+        steps {
+          dsl {
+            external('jobs/seed-demo/jobdsl/**/*.groovy')
+          }
+        }
+      }
+```
+
+The seed job has a single build step, which is a `dsl` (JobDSL) step.
+It reads all of the JobDSL-groovy files, in the `jobs/seed-demo/jobdsl`-folder.
+
+Change the JCasC configuration to use this one, and start Jenkins.
+
+After starting Jenkins, notice that there's only one job. Run it and see what happens.
+
+The JobDSL specifications are in the `jobs/seed-demo/jobdsl`-folder,
+each of these reference a pipeline in the `jobs/seed-demo/pipeline`-folder.
+
+The JobDSL-files must be in the same repository as the
+seed job, because they are read from the job's workspace when it's run.
+
+The pipelines however are referenced with the URL of their respective git repositories,
+inside the JobDSL files, so they could easily live in the individual repositories with their projects.
 
 ## List of inline pipeline jobs hardcoded into jenkins.yaml
 
