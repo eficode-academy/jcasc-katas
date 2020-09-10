@@ -144,6 +144,10 @@ Change the JCasC configuration to use this one, and start Jenkins.
 
 After starting Jenkins, notice that there's only one job. Run it and see what happens.
 
+The job might fail because of "Script Security" that's good!
+We only want to run things we've authorized. Locate "In Process Script Approval"
+under Manage Jenkins, and approve the scripts.
+
 The JobDSL specifications are in the `jobs/seed-demo/jobdsl`-folder,
 each of these reference a pipeline in the `jobs/seed-demo/pipeline`-folder.
 
