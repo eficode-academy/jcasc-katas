@@ -9,6 +9,10 @@ But notice how, every time you start it, there are no jobs.
 > However, this is still manual configuration,
 > and we'd like to avoid as much of that as possible.
 
+> NB: for this exercise, we've commented out the `jenkins_home` volume
+> in the docker-compose.yml. To show you the practicality of JCasC,
+> we're going to make Jenkins truly ephemeral.
+
 ## First steps
 
 Look in the `pipeline/Jenkinsfile`, this is an example of a simple
@@ -146,129 +150,90 @@ After starting Jenkins, notice that there's only one job. Run it and see what ha
 
 The job might fail because of "Script Security" that's good!
 We only want to run things we've authorized. Locate "In Process Script Approval"
-under Manage Jenkins, and approve the scripts.
+under Manage Jenkins, approve the scripts and run the job again.
 
-The JobDSL specifications are in the `jobs/seed-demo/jobdsl`-folder,
-each of these reference a pipeline in the `jobs/seed-demo/pipeline`-folder.
-
-The JobDSL-files must be in the same repository as the
-seed job, because they are read from the job's workspace when it's run.
-
-The pipelines however are referenced with the URL of their respective git repositories,
-inside the JobDSL files, so they could easily live in the individual repositories with their projects.
-
-## List of inline pipeline jobs hardcoded into jenkins.yaml
-
-- Jobdsl i jenkins.yaml, changes in jenkins.yaml
-- jenkins.yaml, list of jobs in jenkins.yaml
-- restart jenkins, every time, making changes to anything
-
-### jobs-parameter in jenkins.yaml
+!!!! COMMENT BEGIN Script Security is going to be annoying with an ephemeral Jenkins. !!!!
+Disable for demo purposes? - in `jenkins.yaml`
 
 ```yaml
-jenkins:
-  systemMessage: "Jenkins says hello world :)\n\n"
-jobs:
-- script: |
-    // jobDSL
+security:
+  globaljobdslsecurityconfiguration:
+    useScriptSecurity: false
 ```
 
-JobDSL:
+!!!! COMMENT END Script Security
 
-```groovy
-pipelineJob('hello-pipeline-inline') {
-  definition { cps { script("""
-  // pipeline script
-  """) } }
-}
-```
+Two jobs should now appear `one` and `two`, run them and verify that they work.
 
-JobDsl Inlined in `jenkins.yaml`:
+> The JobDSL specifications are in the `jobs/seed-demo/jobdsl`-folder,
+> each of these reference a pipeline in the `jobs/seed-demo/pipeline`-folder.
+
+> The JobDSL-files must be in the same repository as the
+> seed job, because they are read from the job's workspace when it's run.
+
+> The pipelines however are referenced with the URL of their respective git repositories,
+> inside the JobDSL files, so they could easily live in the individual repositories with their projects.
+
+### Optional: Auto-bootstrapping Seed jobs
+
+We still have to manually run the `super-seed`-job,
+to add the other jobs to our Jenkins.
+Imagine if we could trigger that automatically, say, just after Jenkins has started.
+
+There's no "nice" way of having Jenkins run a job on startup,
+you could do it with what's referred to as a "startup script,"
+but we would like to use JCasC configuration for this,
+because it means changes in less places.
+
+So, firstly. Making the job trigger automatically.
+That can be done by adding e.g. a `cron`-trigger, set to run every 2 minutes,
+like below:
 
 ```yaml
+job('super-seed') {
+  triggers {
+    // This trigger will be overwritten, it's just here to auto-trigger _one_ build.
+    cron('H/2 * * * *')
+  }
+  scm {
   ...
-jobs:
-- script: |
-    pipelineJob('hello-pipeline-inline') {
-      definition { cps { script("""
-        // pipeline script
-      """) } }
-    }
 ```
 
-Pipeline in `pipeline/Jenkinsfile`, inlined below:
+Add this to the JCasC configuration, start Jenkins and
+notice how your job is automatically triggered!
+(After a couple of minutes maybe, this is a great chance to stretch your legs!)
 
-```yaml
-jobs:
-- script: |
-    pipelineJob('hello-pipeline-inline') {
-      definition { cps { script("""
-        pipeline {
-          agent any
-          stages {
-            stage('Hello, World!') {
-              steps {
-                sh 'echo "Hello, World!"'
-              }
-            }
-          }
-        }
-      """) } }
-    }
-```
+Great! The job runs and adds job `one` and `two` to jenkins!
 
-> NB: when you add more pipeline jobs, the names must be unique,
-> otherwise they will overwrite eachother.
+> NB: You may have to approve the scripts again.
 
-## List of external pipeline jobs hardcoded into jenkins.yaml
+But now we have a new problem, the seed job runs _every_ 2 minutes.
 
-- Jobdsl i jenkins.yaml, changes in jenkins.yaml
-- bootstraps pipeline jobs from repositories
-- restart jenkins on add/remove jobs / change job-config
-- pipeline changes reloaded when pipeline runs
+> NB: At this point you will need a fork of the repository
 
-```yaml
-jobs:
-- script: |
-    pipelineJob('hello-pipeline-ext') {
-      definition { cpsScm {
-        // git-config
-        // script location
-      } }
-    }
-```
+Add a copy of the seed-job to the `jobs/seed-demo/jobdsl`-folder,
+that Jenkins is currently reading JobDSL from.
+Name it `seed_job.groovy` or similar.
+(NB: don't use dashes in filenames of JobDSL scripts.)
+Remove the `cron(..)` part from the copy.
 
-```yaml
-jobs:
-- script: |
-    pipelineJob('hello-pipeline-ext') {
-      definition { cpsScm {
-          scm {
-            git {
-              remote {
-                url ('https://github.com:praqma-training/jcasc-katas.git')
-              }
-            }
-          }
-          scriptPath("jobs/casc-config/pipeline/Jenkinsfile")
-      } }
-    }
-```
+Start Jenkins and quickly! Go to the configuration of the seed job.
+If it's running on localhost, this link might work <http://localhost:8080/job/super-seed/configure>
 
-> NB: The above links to the `praqma-training/jcasc-katas.git`-repository
-> make changes so it matches your fork and reads your changes.
+Notice that under "Build Triggers", "Build periodically" is enabled, with the value
+`H/2 * * * *`.
 
-## jobdsl seed job hardcoded into jenkins.yaml
+Revisit this page after the job has run once.
+The seed job should be overwritten with the configuration from the repository.
+(If you don't want to wait, you can simply click the "Build now"
+and verify that the trigger is gone.)
 
-NB: Left as an exercise to the reader
+## More resources
 
-See: <https://www.youtube.com/watch?v=uhD49XXiRqY>
+[Jenkins, Online Meetup: From Freestyle jobs to Pipeline, with JobDSL
+](https://www.youtube.com/watch?v=uhD49XXiRqY)
+[Online Meetup: Configuration as Code of Jenkins (for Kubernetes)
+](https://www.youtube.com/watch?v=KB7thPsG9VA&ab_channel=Jenkins)
 
-- Jobdsl i jenkins.yaml, changes in jenkins.yaml
-- bootstraps pipeline jobs from repositories
-- restart jenkins on add/remove jobs / change seed-config
-
-## Further readings
-
-- ref jobdsl
-- ref pipeline
+[JobDSL Api Reference](https://jenkinsci.github.io/job-dsl-plugin/)
+[Pipeline Syntax](https://www.jenkins.io/doc/book/pipeline/syntax/)

@@ -7,9 +7,9 @@ services:
       - 8080:8080
       - 50000:50000
     volumes:
-      - jenkins_home:/var/jenkins_home
+#      - jenkins_home:/var/jenkins_home
       - ./casc-config:/var/jenkins_config
-    environment: 
+    environment:
       - CASC_JENKINS_CONFIG=/var/jenkins_config
     secrets:
       - adminpw
@@ -17,5 +17,5 @@ services:
 secrets:
   adminpw:
     file: ./secret/admin.txt
-volumes:
-  jenkins_home:
+# volumes:
+#  jenkins_home:
