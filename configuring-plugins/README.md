@@ -51,11 +51,14 @@ security](../img/configure-global-security-matrix-authorization.png)
 In that way you can let specific users or groups have fine grained access to
 e.g. looking at jobs, run them, or configure them.
 
+A list of strings with the following format: "PermissionGroup/PermissionName:UserOrGroup".
+
+In this task, you are
+
 ### Task
 
 **Manage Jenkins** -> **Configure Global Security**
 
-- Enable security
 - Authorization -> Matrix-based security
 
 Look at it, but do not save. "Leave page"
@@ -65,10 +68,30 @@ Look at it, but do not save. "Leave page"
   [the demos in JCasC
   repository](https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos)
 
-- It's a good starting example, try to implement and reload Jenkins
-- Add `- "Job/Read:anonymous"`
-- Logout
-- Watch
+```yaml
+jenkins:
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Overall/Read:anonymous"
+        - "Overall/Administer:authenticated"
+```
+
+We want to be more specific on who is allowed to administer our Jenkins.
+We will do that by first adding another user to our Jenkins, and then scoping the Administer permission to only the user Admin.
+
+```yaml
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: ${adminpw}
+        - id: john
+          password: "john"
+```
+
 - Log in and make a single branch pipeline job with hello world
 - Log out to see that you can still see it.
 
