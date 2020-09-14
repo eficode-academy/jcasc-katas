@@ -1,0 +1,12 @@
+credentials:latest
+git:latest
+ssh-slaves:latest
+warnings:latest
+matrix-auth:latest
+job-dsl:latest
+workflow-aggregator:latest
+jdk-tool:latest
+command-launcher:latest
+configuration-as-code:latest
+ssh-agent:latest
+bouncycastle-api:latest
