@@ -21,7 +21,7 @@ starting the docker container, this plugin will be automatically installed.
 
 The first task is to configure an SSH key. Please create a new SSH key for this
 using the credentials plugin. Both [ed25519](https://ed25519.cr.yp.to/) and
-[RSA(https://en.wikipedia.org/wiki/RSA_(cryptosystem)) algorithms are supported,
+[RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) algorithms are supported,
 you can freely pick either.
 
 ```bash
