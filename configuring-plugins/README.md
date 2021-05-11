@@ -30,9 +30,10 @@ what you need, you can go in and look at the documentation under the JCasC page.
 JCasC structure in the documentation mimics the same structure as the YAML
 structure, guiding you on how your YAML file should look like.
 
-### Task
+### 1. Task
 
-- Find the documentation page by navigating `Manage Jenkins` -> `Configuration as Code` -> `Documentation`
+- Find the documentation page by navigating `Manage Jenkins` ->
+  `Configuration as Code` -> `Documentation`
 - Look at your `jenkins.yaml` configuration and the documentation page
 - Find out where the system message should be, and make it have the following
   message: `Jenkins is now configured with JCasC`
@@ -55,7 +56,7 @@ A list of strings with the following format: "PermissionGroup/PermissionName:Use
 
 In this task, you are
 
-### Task
+### 2. Task
 
 **Manage Jenkins** -> **Configure Global Security**
 
@@ -78,7 +79,8 @@ jenkins:
 ```
 
 We want to be more specific on who is allowed to administer our Jenkins.
-We will do that by first adding another user to our Jenkins, and then scoping the Administer permission to only the user Admin.
+We will do that by first adding another user to our Jenkins, and then scoping
+the Administer permission to only the user Admin.
 
 ```yaml
 jenkins:
@@ -124,7 +126,7 @@ credentials:
 
 ```
 
-### Tasks
+### 3. Tasks
 
 add secret to the docker-compose file down and up the docker-compose add the
 jenkins configuration snippet

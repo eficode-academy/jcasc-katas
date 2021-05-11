@@ -58,8 +58,8 @@ You can add the above to `jenkins.yml`, and then reload the
 configuration. Hopefully, you'll see an entry under **Manage Jenkins** ->
 **Manage Credentials**.
 
-In Github, you can temporarily add the new public key under the , and try to change a
-job to use the `ssh://` protocol. We can continue adding a small
+In Github, you can temporarily add the new public key under the , and try to
+change a job to use the `ssh://` protocol. We can continue adding a small
 job to see that it's possible to clone a repository using the new key.
 
 ### Extra exercises
