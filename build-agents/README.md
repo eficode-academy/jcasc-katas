@@ -32,13 +32,13 @@ The same key will be used in the agents for allowing SSH to connect.
 
 After this step we'll gradually add the configuration to configure the nodes.
 
-### Tasks
+### Tasks to get started
 
 - Run the `setup.sh` script which will generate a set of SSH keys.
 - Start the containers `docker-compose up --build -d`
 - Go into `<yourIP>:8080` to check that Jenkins starts up right
 
-### Import the keys to jenkins
+### Import the keys to Jenkins
 
 Jenkins needs to know about the key as well, which is stored as a credential.
 You will use the same approach as in
@@ -64,13 +64,13 @@ credentials:
                     # paste the private key
 ```
 
-### Tasks
+### Tasks to import the SSH key
 
 - Paste the example above into the JCasC config YAML.
 - Replace the comment with your private key found in the `keys` folder
 - Reload JCasC config to make sure the syntax is correct.
-- Observethat you under `manage jenkins -> credentials` now have a key called
-  ssh_with_passphrase_provided
+- Observe that you under `Manage Jenkins -> Credentials` now have a key called
+  `ssh_with_passphrase_provided`.
 
 > NOTE: If you're in doubt about the syntax of YAML, you can see [this
 > guide](https://yaml-multiline.info/) which lets you input various
@@ -121,7 +121,7 @@ jenkins:
             retryWaitTime: 30
 ```
 
-### Tasks
+### Tasks to update the configuration
 
 - Paste the section above into your configuration under the `jenkins` section
 - Reload the new configuration, and see that Jenkins adds two new agents
@@ -161,7 +161,7 @@ swarm:
     - jenkins-net
 ```
 
-### Tasks
+### Adding a new node with Swarm
 
 - add the `swarm` plugin to [plugins.txt](plugins.txt)
 - update the `docker-compose.yml` file, adding a new container using the

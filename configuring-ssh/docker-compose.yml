@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  jenkins:
+    build:
+      context: .
+    ports:
+      - 8080:8080
+      - 50000:5000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./casc-config:/var/jenkins_config
+    environment:
+      CASC_JENKINS_CONFIG: "/var/jenkins_config"
+      SSH_PRIVATE_KEY: ${SSH_PRIVATE_KEY}
+volumes:
+  jenkins_home:

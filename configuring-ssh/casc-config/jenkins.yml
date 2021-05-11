@@ -1,0 +1,24 @@
+jenkins:
+  systemMessage: "Example of configuring credentials in Jenkins"
+  numExecutors: 3
+  mode: NORMAL
+  scmCheckoutRetryCount: 3
+  labelString: "master-label"
+credentials:
+  system:
+    domainCredentials:
+      - domain:
+          name: "test.com"
+          description: "test.com domain"
+          specifications:
+            - hostnameSpecification:
+                includes: "*.test.com"
+        credentials:
+          - basicSSHUserPrivateKey:
+              scope: SYSTEM
+              id: ssh_with_passphrase_provided
+              username: ssh_root
+              description: "SSH private key file."
+              privateKeySource:
+                directEntry:
+                  privateKey: ${SSH_PRIVATE_KEY}
